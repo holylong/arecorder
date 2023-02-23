@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file>res/BasicTheme.qss</file>
+        <file>res/i18n/voicebata_zh_CN.qm</file>
+        <file>res/close-icon.png</file>
+        <file>res/close.png</file>
+        <file>res/minus.png</file>
+        <file>res/recorder.png</file>
+        <file>res/recorder_anim_1.png</file>
+        <file>res/recorder_anim_2.png</file>
+        <file>res/openfolder.png</file>
+    </qresource>
+</RCC>

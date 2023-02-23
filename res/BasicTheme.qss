@@ -1,0 +1,71 @@
+QWidget{
+    border-radius:5px;
+    background-color:rgb(58,57,58);
+    color:rgb(225,224,225);
+}
+
+QToolBar{
+    border-radius : 2px;
+}
+
+QStackedWidget{
+    border-left: 2px solid gray;
+    border-right: 2px solid gray;
+    border-top: 2px solid gray;
+    border-bottom: 2px solid gray;
+    border-radius : 10px;
+}
+
+QToolButton{
+    border-radius : 2px;
+}
+
+QToolButton:pressed{
+    border-bottom: 2px solid gray;
+    border-radius : 10px;
+    background-color: blue;
+}
+
+QGroupBox {
+     border-color: rgb(156, 156, 156);
+     border-width: 1px;
+     border-style: solid;
+     margin-top: 0.5ex;
+ }
+ QGroupBox::title {
+     subcontrol-origin: margin;
+     subcontrol-position: top left;
+     left: 10px;
+     margin-left: 2px;
+     padding: 0  0px;
+ }
+
+QLineEdit{
+    background-color:rgb(255,255,255);
+    color: rgb(0,0,0);
+}
+
+QPushButton{
+    background-color:rgb(58,57,58);
+}
+
+QPushButton:hover{
+    background-color:rgb(125,125,125);
+}
+
+QPushButton:pressed{
+    background-color:rgb(0,125,125);
+}
+
+QLabel{
+    border-radius : 10px;
+}
+
+QWidget#_mainWidget{
+    /*border-image:url(:/res/city_1.jpg);*/
+    border-radius:5px;
+}
+
+QWidget#topToolBar{
+    border-radius:5px;
+}
