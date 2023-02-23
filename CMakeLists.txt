@@ -49,7 +49,7 @@ set(PROJECT_SOURCES
         ${TS_FILES}
 )
 
-include_directories(D:/commonlib/include)
+include_directories(${FFMPEG_INC_DIR})
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(arecorder
@@ -74,7 +74,7 @@ endif()
 
 target_link_libraries(arecorder PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 
-target_link_directories(arecorder PRIVATE D:/commonlib/ffmpeg-20200721-b5f1e05-win64-dev/lib)
+target_link_directories(arecorder PRIVATE ${FFMPEG_LIBS_DIR})
 target_link_libraries(arecorder PRIVATE avdevice avcodec avformat avutil swresample)
 
 set_target_properties(arecorder PROPERTIES
