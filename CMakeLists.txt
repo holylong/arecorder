@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(voicebata VERSION 0.1 LANGUAGES CXX)
+project(arecorder VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -29,7 +29,7 @@ add_definitions("-DUNICODE" "-D_UNICODE")
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets LinguistTools REQUIRED)
 
-set(TS_FILES voicebata_zh_CN.ts)
+set(TS_FILES arecorder_zh_CN.ts)
 
 set(PROJECT_SOURCES
         main.cpp
@@ -52,7 +52,7 @@ set(PROJECT_SOURCES
 include_directories(D:/commonlib/include)
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(voicebata
+    qt_add_executable(arecorder
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
     )
@@ -60,11 +60,11 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 else()
     if(ANDROID)
-        add_library(voicebata SHARED
+        add_library(arecorder SHARED
             ${PROJECT_SOURCES}
         )
     else()
-        add_executable(voicebata
+        add_executable(arecorder
             ${PROJECT_SOURCES}
         )
     endif()
@@ -72,17 +72,17 @@ else()
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
 
-target_link_libraries(voicebata PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(arecorder PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 
-target_link_directories(voicebata PRIVATE D:/commonlib/ffmpeg-20200721-b5f1e05-win64-dev/lib)
-target_link_libraries(voicebata PRIVATE avdevice avcodec avformat avutil swresample)
+target_link_directories(arecorder PRIVATE D:/commonlib/ffmpeg-20200721-b5f1e05-win64-dev/lib)
+target_link_libraries(arecorder PRIVATE avdevice avcodec avformat avutil swresample)
 
-set_target_properties(voicebata PROPERTIES
+set_target_properties(arecorder PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
 )
 
 if(QT_VERSION_MAJOR EQUAL 6)
-    qt_finalize_executable(voicebata)
+    qt_finalize_executable(arecorder)
 endif()

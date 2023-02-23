@@ -109,7 +109,7 @@ public:
     int         _saveWav{0};
     int         _savePcm{1};
     QString     _saveDir{""};
-    QString     _sampleRate{"16000"};
+    QString     _sampleRate{"44100"};
     QString     _selectDev{"audio=audiome (Realtek(R) Audio)"};
     QString     _path;
 private:

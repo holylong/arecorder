@@ -48,7 +48,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     _font.setBold(true);
 //    _font.setPixelSize(12);
-    avcodec_register_all();
+//    avcodec_register_all();
     avdevice_register_all();
 
     QVector<QPair<QString, QString>> arrDevs = FFmpegUtil::GetDeviceList();
@@ -92,6 +92,7 @@ void MainWindow::InitSigSlot()
 void MainWindow::RecvMsgSlot(const QString &s)
 {
     _btnSwitch->setText(tr("Switch_Start"));
+    _recThread->stop();
     QMessageBox::warning(this, tr("TopTitle"), s, QMessageBox::Ok);
 }
 

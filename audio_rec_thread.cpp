@@ -39,7 +39,14 @@ void AudioRecorderThread::run(){
     if(ret < 0){
         char errbuf[100];
         av_strerror(ret, errbuf, sizeof(errbuf));
-        qDebug() << "oepn device:" << VbConfig::Instance()->_selectDev << " error:" << errbuf << " " << ret;
+        QString errMsg = "oepn device: ";
+        errMsg += VbConfig::Instance()->_selectDev;
+        errMsg += "\n";
+        errMsg += "error: ";
+        errMsg += errbuf;
+        errMsg += QString::number(ret);
+        ReportMsgSignal(errMsg);
+        qDebug() << errMsg;
         return;
     }
 
@@ -49,7 +56,7 @@ void AudioRecorderThread::run(){
 
     AVStream* stream = ctx->streams[0];
     AVCodecParameters *params = stream->codecpar;
-    AVCodecContext* audio_ctx = stream->codec;
+//    AVCodecContext* audio_ctx = stream->codec;
     AudioManager auManager;
 
     if(VbConfig::Instance()->_sampleRate.toInt() == params->sample_rate)

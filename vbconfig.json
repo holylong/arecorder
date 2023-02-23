@@ -1,0 +1,7 @@
+{
+    "SampleRate": "44100",
+    "SaveDir": "F:/mygitsource/arecorder",
+    "SavePcm": 0,
+    "SaveWav": 2,
+    "SelectDev": "audio=audiome (Realtek(R) Audio)"
+}
