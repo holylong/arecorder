@@ -1,6 +1,8 @@
 # recorder for desktop
 一个桌面端的小录音机
 
+![截屏](./images/screenshot.png)
+
 # build
 ```
 cmake -Bbuild_ninja -DQt5_DIR=<qt5 dir> -DFFMPEG_INC_DIR=<ffmpeg include> -DFFMPEG_LIBS_DIR=<ffmpeg libs path>

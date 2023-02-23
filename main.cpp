@@ -5,6 +5,10 @@
 #include <QTranslator>
 #include <QFileSystemWatcher>
 
+#ifndef QT_DEBUG
+#pragma comment(linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"" )
+#endif
+
 void LoadStyleSheet()
 {
 #ifdef QT_DEBUG
