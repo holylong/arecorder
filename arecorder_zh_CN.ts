@@ -4,7 +4,7 @@
 <context>
     <name>AudioRecorderThread</name>
     <message>
-        <location filename="audio_rec_thread.cpp" line="26"/>
+        <location filename="audio_rec_thread.cpp" line="30"/>
         <source>ErrorNoSelectOutDir</source>
         <translation type="unfinished">清选择要保存的文件</translation>
     </message>
@@ -92,8 +92,7 @@
     </message>
     <message>
         <location filename="mainwindow.ui" line="14"/>
-        <location filename="build_ninja/arecorder_autogen/include_Debug/ui_mainwindow.h" line="46"/>
-        <location filename="build_ninja/arecorder_autogen/include_Release/ui_mainwindow.h" line="46"/>
+        <location filename="build_ninja/arecorder_autogen/include/ui_mainwindow.h" line="49"/>
         <source>MainWindow</source>
         <translation type="unfinished"></translation>
     </message>

@@ -7,7 +7,11 @@
 #include <QTime>
 #include <QFile>
 
+#ifdef _WIN32
 #include <Windows.h>
+#else
+#endif
+
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C"{
     #include <libavdevice/avdevice.h>

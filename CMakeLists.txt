@@ -86,3 +86,8 @@ set_target_properties(arecorder PROPERTIES
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(arecorder)
 endif()
+
+
+if(UNIX)
+    target_link_libraries(arecorder PRIVATE ncursesw cairo)
+endif(UNIX)

@@ -29,7 +29,7 @@ extern "C"{
 #pragma comment(lib, "Strmiids.lib")
 #endif
 
-/// list all devices
+/// list all devices   windows command
 /// ffmpeg -list_devices true -f dshow -i dummy
 /// ffmpeg -list_options true -f dshow -i video="Integrated Camera"
 /// ffmpeg -list_options true -f dshow -i audio="audiome (Realtek(R) Audio)"

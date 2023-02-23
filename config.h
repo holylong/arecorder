@@ -10,8 +10,8 @@
 
 #ifdef Q_OS_WIN
     #define FMT_NAME "dshow"
-#elif defined(USING_V4L)
-    #define FMT_NAME "video4linux2,v4l2"
+#elif defined(__GNUC__)
+    #define FMT_NAME "alsa"
 #elif defined(Q_OS_OSX)
     #define FMT_NAME "avfoundation"
 #endif

@@ -5,13 +5,19 @@
 #include <vector>
 #include <iostream>
 #include <QDebug>
+
+#ifdef _WIN32
 #include <Windows.h>
-#include <cstdint>
 #include <objbase.h>
 #include <strmif.h>
 #include <amvideo.h>
 #include <dvdmedia.h>
 #include <uuids.h>
+#elif defined(UNIX)
+
+#endif
+
+#include <cstdint>
 
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C"{
@@ -37,6 +43,7 @@ public:
           return vecs;
     }
 
+#ifdef _WIN32
     static char* WideCharToUtf8(wchar_t* w)
     {
         int l = WideCharToMultiByte(CP_UTF8, 0, w, -1, nullptr, 0, nullptr, nullptr);
@@ -62,12 +69,13 @@ public:
         delete[]wszGBK;
         return strTemp;
     }
-
+#endif
     static QVector<QPair<QString, QString>> GetDeviceList()
     {
-        IMoniker* m = nullptr;
         QVector<QPair<QString, QString>> devices;
-
+#ifdef _WIN32
+        IMoniker* m = nullptr;
+        
         ICreateDevEnum* devenum = nullptr;
         if (CoCreateInstance(CLSID_SystemDeviceEnum, nullptr, CLSCTX_INPROC_SERVER, IID_ICreateDevEnum, reinterpret_cast<void**>(&devenum)) != S_OK)
             return devices;
@@ -122,7 +130,9 @@ public:
             m->Release();
         }
         classenum->Release();
-
+#elif defined(__GNUC__)
+        
+#endif
         return devices;
     }
 };
