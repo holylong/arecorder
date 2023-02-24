@@ -37,6 +37,7 @@ set(PROJECT_SOURCES
         mainwindow.cpp mainwindow.h
         newgroupbox.h newgroupbox.cpp
         mainwindow.ui
+        qtoast.h qtoast.cpp
 
         audio_rec_thread.h audio_rec_thread.cpp
         audio_manager.cpp audio_manager.h

@@ -3,7 +3,6 @@
 #include "audio_manager.h"
 #include "ffmpeg_util.h"
 
-
 #include <QDebug>
 #include <QTime>
 #include <QFile>
@@ -47,13 +46,7 @@ void AudioRecorderThread::run(){
     QString audioDev = "audio=";
     audioDev += VbConfig::Instance()->_selectDev;
 
-    AVDictionary* options = nullptr;
-    av_dict_set(&options, "ch_layout", "mono", 0);
-    char srate[24];
-    sprintf(srate, "%d\0", VbConfig::Instance()->_sampleRate.toInt());
-    av_dict_set(&options, "sample_rate", srate, 0);
-
-    int ret = avformat_open_input(&ctx, audioDev.toStdString().c_str(), fmt, &options);
+    int ret = avformat_open_input(&ctx, audioDev.toStdString().c_str(), fmt, nullptr);
     if(ret < 0){
         char errbuf[100];
         av_strerror(ret, errbuf, sizeof(errbuf));
@@ -63,9 +56,8 @@ void AudioRecorderThread::run(){
         errMsg += "error: ";
         errMsg += errbuf;
         errMsg += QString::number(ret);
+        ReportMsgSignal(errMsg);
         qDebug() << errMsg;
-        ReportMsgSignal(tr("ErrorOpenAudioInput"));
-        
         return;
     }
 
@@ -75,8 +67,21 @@ void AudioRecorderThread::run(){
 
     AVStream* stream = ctx->streams[0];
     AVCodecParameters *params = stream->codecpar;
+    AVCodecContext* audio_ctx = stream->codec;
     AudioManager auManager;
-    header.sampleRate = params->sample_rate;
+
+    if(VbConfig::Instance()->_sampleRate.toInt() == params->sample_rate)
+        header.sampleRate = params->sample_rate;
+    else{
+        header.sampleRate = VbConfig::Instance()->_sampleRate.toInt();
+        auManager.InitManager(params->sample_rate, header.sampleRate,
+            AV_CH_LAYOUT_STEREO, AV_CH_LAYOUT_STEREO,
+            params->channels, params->channels,
+            0, 0,
+            22050, 0,
+            0,
+            AV_SAMPLE_FMT_S16, AV_SAMPLE_FMT_S16);
+    }
 
     header.bitsPerSample = av_get_bits_per_sample(params->codec_id);
     header.numChannels = params->channels;
@@ -124,16 +129,30 @@ void AudioRecorderThread::run(){
     while(!isInterruptionRequested()){
         ret = av_read_frame(ctx, pkt);
         if(ret == 0){
-
-            if(VbConfig::Instance()->_saveWav){
-                fileWav.write((const char*)pkt->data, pkt->size);
+            if(header.sampleRate != params->sample_rate){
+                uint8_t* dstData = nullptr;
+                int  len = 0;
+                auManager.AuResample(pkt->data, pkt->size, &dstData, &len);
+                if(VbConfig::Instance()->_saveWav){
+                    fileWav.write((const char*)dstData, len);
+                }
+                if(VbConfig::Instance()->_savePcm){
+                    filePcm.write((const char*)dstData, len);
+                }
+                /// data size
+                header.dataChunkDataSize += len;
+            }else{
+                if(VbConfig::Instance()->_saveWav){
+                    fileWav.write((const char*)pkt->data, pkt->size);
+                }
+                if(VbConfig::Instance()->_savePcm){
+                    filePcm.write((const char*)pkt->data, pkt->size);
+                }
+                /// data size
+                header.dataChunkDataSize += pkt->size;
             }
-            if(VbConfig::Instance()->_savePcm){
-                filePcm.write((const char*)pkt->data, pkt->size);
-            }
-            /// data size
-            header.dataChunkDataSize += pkt->size;
 
+            
             /// calculate time
             emit TimeChangeSignal(1000.0 * header.dataChunkDataSize /header.byteRate);
             av_packet_unref(pkt);
@@ -162,6 +181,11 @@ void AudioRecorderThread::run(){
 
     if(VbConfig::Instance()->_savePcm){
         filePcm.close();
+    }
+
+    if (VbConfig::Instance()->_sampleRate.toInt() != params->sample_rate)
+    {
+        auManager.UninitManager();
     }
 
     avformat_close_input(&ctx);

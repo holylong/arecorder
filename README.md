@@ -7,6 +7,10 @@
 ```
 cmake -Bbuild_ninja -DQt5_DIR=<qt5 dir> -DFFMPEG_INC_DIR=<ffmpeg include> -DFFMPEG_LIBS_DIR=<ffmpeg libs path>
 cmake --build build_ninja
+
+exp:
+    cmake -Bbuild_ninja -DQt5_DIR=D:\Qt\Qt5.12.11\5.12.11\msvc2017_64\lib\cmake\Qt5 -DFFMPEG_INC_DIR=D:\commonlib\include -DFFMPEG_LIBS_DIR=D:\commonlib\lib
+    cmake -Bbuild_ninja -DQt5_DIR=D:\Qt\Qt5.12.11\5.12.11\msvc2017_64\lib\cmake\Qt5 -DFFMPEG_INC_DIR=D:\commonlib\include -DFFMPEG_LIBS_DIR=D:\commonlib\lib ..\arecorder -GNinja
 ```
 
 # deps

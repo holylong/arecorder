@@ -4,6 +4,7 @@
 #include "newgroupbox.h"
 #include "ffmpeg_util.h"
 #include "config.h"
+#include "qtoast.h"
 
 #include <QPushButton>
 #include <QLabel>
@@ -32,7 +33,8 @@ extern "C"{
 /// list all devices   windows command
 /// ffmpeg -list_devices true -f dshow -i dummy
 /// ffmpeg -list_options true -f dshow -i video="Integrated Camera"
-/// ffmpeg -list_options true -f dshow -i audio="audiome (Realtek(R) Audio)"
+/// ffmpeg -list_options true -f dshow -i audio="audiome (Realtek(R) Audio)" 
+/// (min ch=1 bits=8 rate= 11025)---(max ch=2 bits=16 rate= 44100)
 /// ffmpeg -f dshow -i video="Integrated Camera" -f dshow -i audio="audiome (Realtek(R) Audio)" -vcodec libx264 -acodec aac -strict -2 mycamera.mkv
 /// ffmpeg -ar 44100 -ac 2 -f s16le -i 44100_s16le_2.pcm -ar 48000 -ac 1 -f f32le 48000_f32le_1.pcm
 
@@ -94,6 +96,7 @@ void MainWindow::RecvMsgSlot(const QString &s)
     _btnSwitch->setText(tr("Switch_Start"));
     _recThread->stop();
     QMessageBox::warning(this, tr("TopTitle"), s, QMessageBox::Ok);
+    //QToast::show(tr("NotSupportSampleRate"));
 }
 
 void MainWindow::InitView()
@@ -168,9 +171,12 @@ void MainWindow::InitView()
     cbBoxRate->setModel(listRate->model());
     cbBoxRate->setView(listRate);
     cbBoxRate->setFont(_font);
+    
+    listRate->addItem(new QListWidgetItem(tr("Rate_11025")));
     listRate->addItem(new QListWidgetItem(tr("Rate_16000")));
     listRate->addItem(new QListWidgetItem(tr("Rate_44100")));
     listRate->addItem(new QListWidgetItem(tr("Rate_48000")));
+
     cbBoxRate->setFixedWidth(240);
     sampleRateLayout->addWidget(cbBoxRateTitle, 0, Qt::AlignLeft);
     sampleRateLayout->addWidget(cbBoxRate, 1, Qt::AlignLeft);
