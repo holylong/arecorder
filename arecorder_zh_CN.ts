@@ -113,8 +113,6 @@
     </message>
     <message>
         <location filename="mainwindow.ui" line="14"/>
-        <location filename="build_ninja/arecorder_autogen/include_Debug/ui_mainwindow.h" line="46"/>
-        <location filename="build_ninja/arecorder_autogen/include_Release/ui_mainwindow.h" line="46"/>
         <source>MainWindow</source>
         <translation type="unfinished"></translation>
     </message>

@@ -13,6 +13,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_definitions("-DUNICODE" "-D_UNICODE")
 
+set(FFMPEG_INC_DIR "D:\\commonlib\\include" CACHE STRING "ffmpeg header directory")
+set(FFMPEG_LIBS_DIR "D:\\commonlib\\lib" CACHE STRING "ffmpeg library directory")
+
 # QtCreator supports the following variables for Android, which are identical to qmake Android variables.
 # Check https://doc.qt.io/qt/deployment-android.html for more information.
 # They need to be set before the find_package( ...) calls below.
